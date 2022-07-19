@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: placedecisions-reader-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: argocd-applicationset-controller
+  apiGroup: ""
+roleRef:
+  kind: Role 
+  name: placementdecisions-reader-role
+  apiGroup: ""
+
