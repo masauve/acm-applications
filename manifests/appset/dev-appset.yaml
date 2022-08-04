@@ -20,6 +20,12 @@ spec:
       destination:
         namespace: secdemo
         server: "{{server}}"
+      ignoreDifferences:
+      - group: "apps"
+        kind: "Deployment"
+        jsonPointers:
+        - /spec/template/spec/containers/image
+
       project: default
       source:
         path: app/manifests/overlays/{{name}}
