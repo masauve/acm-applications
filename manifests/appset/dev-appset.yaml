@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dev-appset
+  namespace: acm-gitops-dev
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: dev-clusters
+        requeueAfterSeconds: 30
+  template:
+    metadata:
+      name: dev-appset-{{name}}
+      labels:
+        velero.io/exclude-from-backup: "true"
+    spec:
+      destination:
+        namespace: secdemo
+        server: "{{server}}"
+      project: default
+      source:
+        path: app/manifests/overlays/{{name}}
+        repoURL: https://github.com/masauve/bgdemo/
+        targetRevision: master
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
