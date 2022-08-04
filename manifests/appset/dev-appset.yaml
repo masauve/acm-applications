@@ -24,7 +24,7 @@ spec:
       - group: "apps"
         kind: "Deployment"
         jsonPointers:
-        - /spec/template/spec/containers/image
+        - /spec/template/spec/containers
 
       project: default
       source:
